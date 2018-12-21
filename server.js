@@ -53,7 +53,7 @@ app.get("/masterInventory",(req,res)=>{
       if(typeof masterInventory[filterSpecialChar(element.Item_name)] === 'undefined'){
       masterInventory[filterSpecialChar(element.Item_name)] = startIndex;
       masterInventoryTable.push({Item_name: element.Item_name, inventoryId:startIndex, quantity:Number(element.qty), product_Id:startIndex});
-      medicentoProductTable.push({product_Id:startIndex, product_Name:element.Item_name, manufacturer_Id:element.manfc_code,manufacturer_Name:element.manfc_name, mrp: element.mrp,created_at: element.created_at, quantity:Number(element.qty))};
+      medicentoProductTable.push({product_Id:startIndex, product_Name:element.Item_name, manufacturer_Id:element.manfc_code,manufacturer_Name:element.manfc_name, mrp: element.mrp,created_at: element.created_at, quantity:Number(element.qty)});
       startIndex++;
       }
       else{
@@ -75,7 +75,7 @@ app.get("/productTable",(req,res)=>{
       if(typeof masterInventory[filterSpecialChar(element.Item_name)] === 'undefined'){
       masterInventory[filterSpecialChar(element.Item_name)] = startIndex;
       masterInventoryTable.push({Item_name: element.Item_name, inventoryId:startIndex, quantity:Number(element.qty), product_Id:startIndex});
-      medicentoProductTable.push({product_Id:startIndex, product_Name:element.Item_name, manufacturer_Id:element.manfc_code,manufacturer_Name:element.manfc_name, mrp: element.mrp,created_at: element.created_at, quantity:Number(element.qty))};
+      medicentoProductTable.push({product_Id:startIndex, product_Name:element.Item_name, manufacturer_Id:element.manfc_code,manufacturer_Name:element.manfc_name, mrp: element.mrp,created_at: element.created_at, quantity:Number(element.qty)});
       startIndex++;
       }
       else{
