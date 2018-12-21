@@ -11,6 +11,7 @@ mongoose.connect(
 const VpiInventory = require("./models/inventory");
 var masterInventory = {};
 var masterInventoryTable = [];
+var medicentoProductTable = [];
 const port = process.env.PORT || 3000;
 const app = express();
 app.set("view engine", "ejs");
@@ -51,16 +52,40 @@ app.get("/masterInventory",(req,res)=>{
     item.forEach(function(element){
       if(typeof masterInventory[filterSpecialChar(element.Item_name)] === 'undefined'){
       masterInventory[filterSpecialChar(element.Item_name)] = startIndex;
-      masterInventoryTable.push({Item_name: element.Item_name, inventoryId:startIndex, quantity:Number(element.qty), productId:Number(0)});
+      masterInventoryTable.push({Item_name: element.Item_name, inventoryId:startIndex, quantity:Number(element.qty), product_Id:startIndex});
+      medicentoProductTable.push({product_Id:startIndex, product_Name:element.Item_name, manufacturer_Id:element.manfc_code,manufacturer_Name:element.manfc_name, mrp: element.mrp,created_at: element.created_at, quantity:Number(element.qty))};
       startIndex++;
       }
       else{
         masterInventoryTable[masterInventory[filterSpecialChar(element.Item_name)]].quantity+=Number(element.qty);
         masterInventory[filterSpecialChar(element.Item_name)].quantity+=Number(element.qty);
+        medicentoProductTable[masterInventory[filterSpecialChar(element.Item_name)]].quantity+=Number(element.qty);
       }
     });
   res.setHeader('Content-Type', 'application/json');
   res.send(masterInventoryTable);
+  console.log(Object.keys(masterInventory).length);
+  // cosole.log(item.length)
+});
+});
+app.get("/productTable",(req,res)=>{
+  VpiInventory.find().exec().then(function(item){
+    var startIndex=0;
+    item.forEach(function(element){
+      if(typeof masterInventory[filterSpecialChar(element.Item_name)] === 'undefined'){
+      masterInventory[filterSpecialChar(element.Item_name)] = startIndex;
+      masterInventoryTable.push({Item_name: element.Item_name, inventoryId:startIndex, quantity:Number(element.qty), product_Id:startIndex});
+      medicentoProductTable.push({product_Id:startIndex, product_Name:element.Item_name, manufacturer_Id:element.manfc_code,manufacturer_Name:element.manfc_name, mrp: element.mrp,created_at: element.created_at, quantity:Number(element.qty))};
+      startIndex++;
+      }
+      else{
+        masterInventoryTable[masterInventory[filterSpecialChar(element.Item_name)]].quantity+=Number(element.qty);
+        masterInventory[filterSpecialChar(element.Item_name)].quantity+=Number(element.qty);
+        medicentoProductTable[masterInventory[filterSpecialChar(element.Item_name)]].quantity+=Number(element.qty);
+      }
+    });
+  res.setHeader('Content-Type', 'application/json');
+  res.send(medicentoProductTable);
   console.log(Object.keys(masterInventory).length);
   // cosole.log(item.length)
 });
