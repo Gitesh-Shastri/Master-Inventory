@@ -180,7 +180,7 @@ app.get("/allocate",(req,res)=>{
               };
             });
           });
-        }
+        };
       });
     });
     res.status(200).json(item[0]);
