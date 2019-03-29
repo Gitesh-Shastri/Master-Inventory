@@ -5,7 +5,8 @@
   "main": "cleaning.js",
   "dependencies": {
     "express": "^4.16.4",
-    "mongoose": "^5.4.0"
+    "mongoose": "^5.4.0",
+    "nodemon": "^1.18.10"
   },
   "devDependencies": {},
   "scripts": {

@@ -51,6 +51,7 @@ function filterSpecialChar(string){
  }
 app.get("/masterInventory",(req,res)=>{
   VpiInventory.find().exec().then(function(item){
+    res.send(item);
     var startIndex=0;
     item.forEach(function(element){
       if(typeof masterInventory[filterSpecialChar(element.Item_name)] === 'undefined'){
@@ -71,6 +72,24 @@ app.get("/masterInventory",(req,res)=>{
   // cosole.log(item.length)
 });
 });
+
+app.get("/search",(req,res)=>{
+  searchitems=[];
+  var searchstring="^TRIP"
+  VpiInventory.find().exec().then(function(item){
+    var startIndex=0;
+    item.forEach(function(element){
+            if (element.Item_name.match(searchstring)) {
+              searchitems.push(element);
+            }
+    });
+    res.setHeader('Content-Type', 'application/json');
+    res.send(searchitems);
+    console.log(Object.keys(searchitems).length);
+  // cosole.log(item.length)
+});
+});
+
 app.get("/productTable",(req,res)=>{
   VpiInventory.find().exec().then(function(item){
     var startIndex=0;
